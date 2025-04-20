@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styles from './CreateRoomForm.module.css';
 import { createSafeRoom } from '@/lib/pocketbase';
 
-export default function CreateRoomForm() {
+export default function CreateRoomForm({ onRoomCreated }) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('Vent');
   const [description, setDescription] = useState('');
@@ -21,6 +21,11 @@ export default function CreateRoomForm() {
     try {
         const room = await createSafeRoom({ name, category, description });
         setRoomCode(room.roomCode);
+        
+        // Notify parent component if callback provided
+        if (onRoomCreated) {
+          onRoomCreated(room);
+        }
       } catch (err) {
         setError('Error creating room. Please try again.');
         console.error(err);

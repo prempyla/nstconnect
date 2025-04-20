@@ -22,6 +22,8 @@ export async function createSafeRoom(roomData) {
       isTemporary: true,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week from now
       created: new Date(),
+      memberCount: 1, // Start with 1 member (the creator)
+      lastActivity: new Date()
     };
     
     let record;
@@ -84,6 +86,11 @@ export async function joinSafeRoom(roomCode) {
           userId: pb.authStore.model?.id || 'mock-user-id',
           anonymousName: generateAnonymousName()
         });
+        
+        // Update member count
+        await pb.collection('safeRooms').update(record.id, {
+          memberCount: (record.memberCount || 1) + 1
+        });
       }
     } catch (pocketbaseError) {
       console.warn('PocketBase connection failed, using mock data instead:', pocketbaseError);
@@ -103,6 +110,8 @@ export async function joinSafeRoom(roomCode) {
           isTemporary: true,
           expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
           created: new Date(),
+          memberCount: 1,
+          lastActivity: new Date()
         };
         
         mockRooms.push(record);
@@ -120,6 +129,9 @@ export async function joinSafeRoom(roomCode) {
           userId: 'mock-user-id',
           anonymousName: generateAnonymousName()
         });
+        
+        // Update member count in mock data
+        record.memberCount = (record.memberCount || 1) + 1;
       }
     }
     
@@ -148,7 +160,18 @@ export async function getMySafeRooms() {
       
       // Get rooms from mock data
       const myMemberships = mockMembers.filter(m => m.userId === 'mock-user-id');
-      rooms = myMemberships.map(m => mockRooms.find(r => r.id === m.roomId)).filter(Boolean);
+      rooms = myMemberships.map(m => {
+        const room = mockRooms.find(r => r.id === m.roomId);
+        if (room) {
+          // Make sure room has the necessary properties
+          return {
+            ...room,
+            memberCount: room.memberCount || 1,
+            lastActivity: room.lastActivity || room.created || new Date()
+          };
+        }
+        return null;
+      }).filter(Boolean);
       
       // If no rooms exist yet, create sample rooms
       if (rooms.length === 0) {

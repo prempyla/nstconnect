@@ -33,8 +33,9 @@ export default function MyRooms() {
       }
     };
 
+    setLoading(true);
     fetchRooms();
-  }, []);
+  }, []); // The key prop from the parent will cause component remount when needed
 
   if (loading) {
     return <div className={styles.loading}>Loading your rooms...</div>;

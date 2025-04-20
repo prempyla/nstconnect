@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styles from './JoinRoomForm.module.css';
 import { joinSafeRoom } from '@/lib/pocketbase';
 
-export default function JoinRoomForm() {
+export default function JoinRoomForm({ onRoomJoined }) {
   const [roomCode, setRoomCode] = useState('');
   const [roomInfo, setRoomInfo] = useState(null);
   const [error, setError] = useState(null);
@@ -22,6 +22,13 @@ export default function JoinRoomForm() {
       const room = await joinSafeRoom(roomCode);
       setRoomInfo(room);
       setSuccess(true);
+      
+      // After 2 seconds, switch to My Rooms tab if the callback is provided
+      if (onRoomJoined) {
+        setTimeout(() => {
+          onRoomJoined();
+        }, 2000);
+      }
     } catch (err) {
       setError('Room not found. Please check the code and try again.');
       console.error(err);
