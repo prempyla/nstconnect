@@ -5,8 +5,8 @@ import PocketBase from 'pocketbase';
 const pb = new PocketBase('http://127.0.0.1:8090'); // Change this to your production URL later
 
 // Mock data storage when PocketBase is unavailable
-const mockRooms = [];
-const mockMembers = [];
+let mockRooms = [];
+let mockMembers = [];
 
 // Helper functions for Safe Rooms feature
 export async function createSafeRoom(roomData) {
@@ -230,6 +230,12 @@ export async function getMySafeRooms() {
     console.error('Error fetching safe rooms:', error);
     throw error;
   }
+}
+
+// Function to clear mock data cache (useful for testing)
+export function clearMockData() {
+  mockRooms = [];
+  mockMembers = [];
 }
 
 // Utility functions

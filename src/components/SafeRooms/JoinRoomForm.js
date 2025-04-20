@@ -7,28 +7,24 @@ import { joinSafeRoom } from '@/lib/pocketbase';
 
 export default function JoinRoomForm({ onRoomJoined }) {
   const [roomCode, setRoomCode] = useState('');
-  const [roomInfo, setRoomInfo] = useState(null);
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    setRoomInfo(null);
 
     try {
       const room = await joinSafeRoom(roomCode);
-      setRoomInfo(room);
-      setSuccess(true);
       
-      // After 2 seconds, switch to My Rooms tab if the callback is provided
+      // Notify parent component
       if (onRoomJoined) {
-        setTimeout(() => {
-          onRoomJoined();
-        }, 2000);
+        onRoomJoined(room);
       }
+      
+      // Reset form
+      setRoomCode('');
     } catch (err) {
       setError('Room not found. Please check the code and try again.');
       console.error(err);
@@ -36,16 +32,6 @@ export default function JoinRoomForm({ onRoomJoined }) {
       setIsSubmitting(false);
     }
   };
-
-  if (success) {
-    return (
-      <div className={styles.successContainer}>
-        <h2 className={styles.successTitle}>Successfully Joined Room!</h2>
-        <p className={styles.successMessage}>You have joined the safe room.</p>
-        <button className={styles.enterButton}>Enter Room</button>
-      </div>
-    );
-  }
 
   return (
     <div>
