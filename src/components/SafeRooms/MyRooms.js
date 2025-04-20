@@ -13,7 +13,6 @@ export default function MyRooms() {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        setLoading(true);
         const fetchedRooms = await getMySafeRooms();
         
         // Process rooms to ensure they have all required properties
@@ -26,22 +25,17 @@ export default function MyRooms() {
         }));
         
         setRooms(processedRooms);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching rooms:", err);
         setError("Failed to load your rooms. Please try again later.");
-      } finally {
         setLoading(false);
       }
     };
 
+    setLoading(true);
     fetchRooms();
-  }, []); // The parent component will remount this component when needed via key prop
-
-  const handleRoomClick = (roomId) => {
-    console.log(`Enter room: ${roomId}`);
-    // Room entry functionality would be implemented here
-    // For now, just log that we're entering the room
-  };
+  }, []); // The key prop from the parent will cause component remount when needed
 
   if (loading) {
     return <div className={styles.loading}>Loading your rooms...</div>;
@@ -78,12 +72,7 @@ export default function MyRooms() {
               Last activity: {formatTimeAgo(room.lastActivity)}
             </div>
             
-            <button 
-              className={styles.enterButton}
-              onClick={() => handleRoomClick(room.id)}
-            >
-              Enter Room
-            </button>
+            <button className={styles.enterButton}>Enter Room</button>
           </div>
         ))}
       </div>

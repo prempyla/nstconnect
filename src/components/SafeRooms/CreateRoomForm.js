@@ -11,6 +11,7 @@ export default function CreateRoomForm({ onRoomCreated }) {
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [roomCode, setRoomCode] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,24 +19,31 @@ export default function CreateRoomForm({ onRoomCreated }) {
     setError(null);
     
     try {
-      const room = await createSafeRoom({ name, category, description });
-      
-      // Notify parent component with the created room
-      if (onRoomCreated) {
-        onRoomCreated(room);
+        const room = await createSafeRoom({ name, category, description });
+        setRoomCode(room.roomCode);
+        
+        // Notify parent component if callback provided
+        if (onRoomCreated) {
+          onRoomCreated(room);
+        }
+      } catch (err) {
+        setError('Error creating room. Please try again.');
+        console.error(err);
+      } finally {
+        setIsSubmitting(false);
       }
-      
-      // Reset form
-      setName('');
-      setCategory('Vent');
-      setDescription('');
-    } catch (err) {
-      setError('Error creating room. Please try again.');
-      console.error(err);
-    } finally {
-      setIsSubmitting(false);
-    }
   };
+
+  if (roomCode) {
+    return (
+      <div className={styles.successContainer}>
+        <h2 className={styles.successTitle}>Room Created Successfully!</h2>
+        <p className={styles.successMessage}>Share this code with others to invite them to your room:</p>
+        <div className={styles.roomCode}>{roomCode}</div>
+        <button className={styles.enterButton}>Enter Room</button>
+      </div>
+    );
+  }
 
   return (
     <div>
