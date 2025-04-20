@@ -9,23 +9,25 @@ export default function JoinRoomForm() {
   const [roomCode, setRoomCode] = useState('');
   const [roomInfo, setRoomInfo] = useState(null);
   const [error, setError] = useState(null);
-  const [isJoining, setIsJoining] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  const handleJoin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsJoining(true);
+    setIsSubmitting(true);
     setError(null);
     setRoomInfo(null);
 
     try {
       const room = await joinSafeRoom(roomCode);
       setRoomInfo(room);
+      setSuccess(true);
     } catch (err) {
-        setError('Room not found. Please check the code and try again.');
-        console.error(err);
-      } finally {
-        setIsJoining(false);
-      }
+      setError('Room not found. Please check the code and try again.');
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (success) {

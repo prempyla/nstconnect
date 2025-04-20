@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import NavBar from "@/components/SafeRooms/NavBar";
+import NavBar from "@/components/Navbar";
 import styles from "./page.module.css";
 import SafeRoomTabs from "@/components/SafeRooms/SafeRoomTabs";
 import CreateRoomForm from "@/components/SafeRooms/CreateRoomForm";

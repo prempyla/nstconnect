@@ -1,5 +1,5 @@
 import Link from "next/link";
-import NavBar from "@/components/SafeRooms/NavBar";
+import NavBar from "@/components/Navbar";
 import FeatureCard from "@/components/FeatureCard";
 import cardStyles from "@/components/CardStyles.module.css";
 import styles from "./page.module.css";
