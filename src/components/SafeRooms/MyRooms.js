@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './MyRooms.module.css';
+import { getMySafeRooms } from '@/lib/pocketbase';
 
 export default function MyRooms() {
   const [rooms, setRooms] = useState([]);
@@ -10,27 +11,29 @@ export default function MyRooms() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // This is where we'll fetch from PocketBase
-    // For now, just mock some data
-    setTimeout(() => {
-      setRooms([
-        {
-          id: '1',
-          name: 'Exam Stress Support',
-          category: 'Study',
-          memberCount: 5,
-          lastActivity: new Date()
-        },
-        {
-          id: '2',
-          name: 'Freshman Homesickness',
-          category: 'Homesick',
-          memberCount: 3,
-          lastActivity: new Date(Date.now() - 24 * 60 * 60 * 1000)
-        }
-      ]);
-      setLoading(false);
-    }, 1000);
+    const fetchRooms = async () => {
+      try {
+        const fetchedRooms = await getMySafeRooms();
+        
+        // Process rooms to ensure they have all required properties
+        const processedRooms = fetchedRooms.map(room => ({
+          id: room.id,
+          name: room.name,
+          category: room.category,
+          memberCount: room.memberCount || 1, // Default if not set
+          lastActivity: room.lastActivity ? new Date(room.lastActivity) : new Date(room.created || Date.now())
+        }));
+        
+        setRooms(processedRooms);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching rooms:", err);
+        setError("Failed to load your rooms. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchRooms();
   }, []);
 
   if (loading) {
