@@ -1,5 +1,5 @@
 import Link from "next/link";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/SafeRooms/NavBar";
 import FeatureCard from "@/components/FeatureCard";
 import cardStyles from "@/components/CardStyles.module.css";
 import styles from "./page.module.css";
@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <NavBar />
-      
       <div className={styles.heroSection}>
         <div className={styles.container}>
           <h1 className={styles.title}>
@@ -26,7 +25,7 @@ export default function Home() {
           </h1>
           
           <p className={styles.subtitle}>
-            (Connect now ↓)
+            (Jump in ↓)
           </p>
           
           <div className={styles.cardGrid}>

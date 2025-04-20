@@ -1,0 +1,109 @@
+/* src/components/SafeRooms/MyRooms.module.css */
+.title {
+    font-size: 1.5rem;
+    color: var(--navy-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .roomList {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .roomCard {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .roomCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .roomHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category {
+    background-color: var(--yellow-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  
+  .members {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .roomName {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--navy-color);
+    margin: 0.5rem 0;
+  }
+  
+  .activity {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  
+  .enterButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .enterButton:hover {
+    background-color: var(--navy-dark);
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
+  
+  .error {
+    background-color: #FFECEC;
+    color: #D32F2F;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+  
+  .emptyState {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .emptyTitle {
+    font-size: 1.25rem;
+    color: var(--navy-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .emptyText {
+    color: #666;
+  }
+  
+  @media (min-width: 768px) {
+    .roomList {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
