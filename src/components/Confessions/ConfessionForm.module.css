@@ -1,0 +1,111 @@
+.formContainer {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .formTitle {
+    font-size: 1.5rem;
+    color: var(--navy-color);
+    margin-bottom: 1.5rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .label {
+    display: block;
+    font-weight: 500;
+    color: var(--navy-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .input, .textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+  }
+  
+  .textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  .input:focus, .textarea:focus {
+    outline: none;
+    border-color: var(--navy-color);
+  }
+  
+  .tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .tagButton {
+    background-color: #f3f4f6;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .tagButton:hover {
+    background-color: #e5e7eb;
+  }
+  
+  .selectedTag {
+    background-color: var(--pink-light);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .submitButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .submitButton:hover:not(:disabled) {
+    background-color: var(--navy-dark);
+  }
+  
+  .submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .errorMessage {
+    background-color: #FFECEC;
+    color: #D32F2F;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .successMessage {
+    background-color: #ECFFEC;
+    color: #2F8A2F;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .submitButton {
+      width: auto;
+      float: right;
+    }
+  }

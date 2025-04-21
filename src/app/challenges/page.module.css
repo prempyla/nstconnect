@@ -1,0 +1,84 @@
+/* src/app/challenges/page.module.css */
+.main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    width: 100%;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--navy-color);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgba(22, 29, 86, 0.1);
+    overflow-x: auto;
+  }
+  
+  .tab {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  .tab::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--navy-color);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  
+  .tab:hover {
+    color: var(--navy-color);
+  }
+  
+  .activeTab {
+    color: var(--navy-color);
+    font-weight: 600;
+  }
+  
+  .activeTab::after {
+    transform: scaleX(1);
+  }
+  
+  .content {
+    background-color: var(--purple-light);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      padding: 4rem 2rem;
+    }
+    
+    .title {
+      font-size: 3rem;
+    }
+  }
