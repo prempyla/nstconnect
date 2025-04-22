@@ -28,7 +28,7 @@ export default function Confessions() {
       {
         id: 'conf-001',
         title: 'LOVE',
-        content: 'IM THIBK I WILL LOVE HER',
+        content: 'I Think i might love her',
         tags: ['Love', 'Relationships'],
         created: new Date('2025-04-19T14:30:00'),
         reactions: {
