@@ -9,6 +9,7 @@ export default function CreateRoomForm({ onRoomCreated }) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('Vent');
   const [description, setDescription] = useState('');
+  const [isPublic, setIsPublic] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [roomCode, setRoomCode] = useState(null);
@@ -19,7 +20,7 @@ export default function CreateRoomForm({ onRoomCreated }) {
     setError(null);
     
     try {
-        const room = await createSafeRoom({ name, category, description });
+        const room = await createSafeRoom({ name, category, description, isPublic });
         setRoomCode(room.roomCode);
         
         // Notify parent component if callback provided
@@ -93,6 +94,31 @@ export default function CreateRoomForm({ onRoomCreated }) {
             className={styles.textarea}
             rows={4}
           />
+        </div>
+
+        <div className={styles.formGroup}>
+          <div className={styles.visibilityToggle}>
+            <label className={styles.toggleLabel}>
+              <input 
+                type="checkbox" 
+                checked={isPublic}
+                onChange={(e) => setIsPublic(e.target.checked)}
+                className={styles.toggleInput}
+              />
+              <span className={styles.toggleSlider}></span>
+            </label>
+            <div className={styles.toggleText}>
+              <span className={styles.visibilityTitle}>Room Visibility: </span>
+              <span className={styles.visibilityValue}>
+                {isPublic ? 'Public' : 'Private'} Room
+              </span>
+              <p className={styles.visibilityDescription}>
+                {isPublic 
+                  ? 'Anyone can discover and join this room from Available Rooms.' 
+                  : 'Only people with the room code can join this room.'}
+              </p>
+            </div>
+          </div>
         </div>
         
         <button 
