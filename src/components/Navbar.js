@@ -9,7 +9,6 @@ export default function NavBar() {
           <div className={styles.logoCircle}></div>
           <div className={styles.logoText}>NST Connect</div>
         </Link>
-        
         <div className={styles.navLinks}>
           <Link href="/confessions" className={styles.navLink}>
             CONFESSIONS
