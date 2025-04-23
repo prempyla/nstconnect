@@ -49,7 +49,9 @@ export default function MyRooms() {
     return (
       <div className={styles.emptyState}>
         <h2 className={styles.emptyTitle}>No Rooms Found</h2>
-        <p className={styles.emptyText}>You haven't created or joined any safe rooms yet.</p>
+        <p className={styles.emptyText}>You haven&apos;t created or joined any safe rooms yet.</p>
+
+
       </div>
     );
   }
