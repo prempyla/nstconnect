@@ -1,4 +1,3 @@
-
 import PocketBase from 'pocketbase';
 
 // Initialize PocketBase
@@ -31,10 +30,11 @@ export async function createSafeRoom(roomData) {
     
     try {
       // Try to create in PocketBase
-      record = await pb.collection('safeRooms').create(data);
+      // Use consistent collection name
+      record = await pb.collection('safe_rooms').create(data);
       
       // Also add creator as a member
-      await pb.collection('roomMembers').create({
+      await pb.collection('room_members').create({
         roomId: record.id,
         userId: pb.authStore.model?.id || 'mock-user-id',
         anonymousName: generateAnonymousName()
@@ -67,13 +67,18 @@ export async function createSafeRoom(roomData) {
   }
 }
 
+/**
+ * Get all public safe rooms
+ * @returns {Promise<Array>} Array of public safe room objects
+ */
 export async function getPublicSafeRooms() {
   try {
     let publicRooms = [];
     
     try {
       // Fetch public rooms from PocketBase
-      const records = await pb.collection('safeRooms').getList(1, 20, {
+      // Use consistent collection name
+      const records = await pb.collection('safe_rooms').getList(1, 20, {
         filter: 'isPublic=true && expiresAt>@now',
         sort: '-lastActivity,created'
       });
@@ -173,23 +178,24 @@ export async function joinSafeRoom(roomCode) {
     
     try {
       // Find room by code in PocketBase
-      record = await pb.collection('safeRooms').getFirstListItem(`roomCode="${roomCode}"`);
+      // Use consistent collection name
+      record = await pb.collection('safe_rooms').getFirstListItem(`roomCode="${roomCode}"`);
       
       // Check if user is already a member
-      const existingMember = await pb.collection('roomMembers').getFirstListItem(
+      const existingMember = await pb.collection('room_members').getFirstListItem(
         `roomId="${record.id}" && userId="${pb.authStore.model?.id || 'mock-user-id'}"`
       ).catch(() => null);
       
       if (!existingMember) {
         // Add user as a member
-        await pb.collection('roomMembers').create({
+        await pb.collection('room_members').create({
           roomId: record.id,
           userId: pb.authStore.model?.id || 'mock-user-id',
           anonymousName: generateAnonymousName()
         });
         
         // Update member count
-        await pb.collection('safeRooms').update(record.id, {
+        await pb.collection('safe_rooms').update(record.id, {
           memberCount: (record.memberCount || 1) + 1,
           lastActivity: new Date() // Update last activity timestamp
         });
@@ -253,7 +259,8 @@ export async function getMySafeRooms() {
     let rooms = [];
     
     try {
-      const memberships = await pb.collection('roomMembers').getFullList({
+      // Use consistent collection name
+      const memberships = await pb.collection('room_members').getFullList({
         filter: `userId="${pb.authStore.model?.id || 'mock-user-id'}"`,
         expand: 'roomId'
       });
@@ -364,33 +371,4 @@ function generateAnonymousName() {
   return `${randomAdjective}${randomAnimal}`;
 }
 
-// Add this to your lib/pocketbase.js
-
-/**
- * Get all public safe rooms
- * @returns {Promise<Array>} Array of public safe room objects
- */
-export async function getPublicSafeRooms() {
-  try {
-    // Fetch all safe rooms where isPublic is true
-    const records = await pb.collection('safe_rooms').getList(1, 50, {
-      filter: 'isPublic = true',
-      sort: '-created',
-    });
-    
-    return records.items.map(room => ({
-      id: room.id,
-      name: room.name,
-      category: room.category,
-      description: room.description,
-      roomCode: room.roomCode,
-      memberCount: room.memberCount || 1,
-      lastActivity: room.lastActivity || room.created,
-      created: room.created
-    }));
-  } catch (error) {
-    console.error('Error fetching public safe rooms:', error);
-    throw error;
-  }
-}
 export default pb;
