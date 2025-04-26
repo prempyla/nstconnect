@@ -4,6 +4,7 @@ import styles from './SafeRoomTabs.module.css';
 export default function SafeRoomTabs({ activeTab, onChangeTab }) {
   const tabs = [
     { id: 'MY_ROOMS', label: 'MY ROOMS' },
+    { id: 'AVAILABLE_ROOMS', label: 'AVAILABLE ROOMS' },
     { id: 'JOIN_ROOM', label: 'JOIN ROOM' },
     { id: 'CREATE_ROOM', label: 'CREATE ROOM' },
   ];

@@ -7,6 +7,7 @@ import SafeRoomTabs from "@/components/SafeRooms/SafeRoomTabs";
 import CreateRoomForm from "@/components/SafeRooms/CreateRoomForm";
 import JoinRoomForm from "@/components/SafeRooms/JoinRoomForm";
 import MyRooms from "@/components/SafeRooms/MyRooms";
+import AvailableRooms from "@/components/SafeRooms/AvailableRooms";
 
 export default function SafeRooms() {
   const [activeTab, setActiveTab] = useState('CREATE_ROOM');
@@ -47,6 +48,8 @@ export default function SafeRooms() {
     switch (activeTab) {
       case 'MY_ROOMS':
         return <MyRooms key={refreshRooms} />;
+      case 'AVAILABLE_ROOMS':
+        return <AvailableRooms onRoomJoined={switchToMyRooms} />;
       case 'JOIN_ROOM':
         if (joinedRoom) {
           return (
