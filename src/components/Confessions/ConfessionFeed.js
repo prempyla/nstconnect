@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './ConfessionFeed.module.css';
+import { updateConfessionReaction } from '@/lib/pocketbase'; // Import the new function
 
 export default function ConfessionFeed({ confessions, isLoading }) {
   if (isLoading) {
@@ -26,15 +27,25 @@ export default function ConfessionFeed({ confessions, isLoading }) {
 
 function ConfessionCard({ confession }) {
   const [upvoted, setUpvoted] = useState(false);
-  const [upvoteCount, setUpvoteCount] = useState(confession.reactions.upvotes || 0);
+  const [upvoteCount, setUpvoteCount] = useState(confession.reactions?.upvotes || 0);
   
-  const handleUpvote = () => {
-    if (upvoted) {
-      setUpvoteCount(upvoteCount - 1);
-    } else {
-      setUpvoteCount(upvoteCount + 1);
+  const handleUpvote = async () => {
+    try {
+      const newCount = upvoted ? upvoteCount - 1 : upvoteCount + 1;
+      setUpvoteCount(newCount);
+      setUpvoted(!upvoted);
+      
+      // Update the reaction in the backend
+      await updateConfessionReaction(confession.id, {
+        ...confession.reactions,
+        upvotes: newCount
+      });
+    } catch (error) {
+      console.error("Error updating upvote:", error);
+      // Revert the UI changes if the API call fails
+      setUpvoteCount(upvoted ? upvoteCount : upvoteCount - 1);
+      setUpvoted(!upvoted);
     }
-    setUpvoted(!upvoted);
   };
 
   const formatDate = (date) => {
@@ -80,7 +91,7 @@ function ConfessionCard({ confession }) {
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
-            <span>{confession.reactions.comments}</span>
+            <span>{confession.reactions?.comments || 0}</span>
           </span>
         </div>
       </div>

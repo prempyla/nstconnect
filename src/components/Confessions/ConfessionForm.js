@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import styles from './ConfessionForm.module.css';
+import { createConfession } from '@/lib/pocketbase'; // Import the new function
 
 export default function ConfessionForm({ onConfessionSubmitted }) {
   const [title, setTitle] = useState('');
@@ -38,13 +39,10 @@ export default function ConfessionForm({ onConfessionSubmitted }) {
     setError(null);
     
     try {
-      // This would be an API call in production
-      // For now, let's simulate an API request
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('Confession submitted:', {
-        title,
-        message,
+      // Submit the confession using the new function
+      await createConfession({
+        title: title.trim(),
+        message: message.trim(),
         tags: selectedTags
       });
       
@@ -83,7 +81,7 @@ export default function ConfessionForm({ onConfessionSubmitted }) {
       
       {success && (
         <div className={styles.successMessage}>
-          Confession submitted successfully! It will be reviewed shortly.
+          Confession submitted successfully! It will be visible shortly.
         </div>
       )}
       

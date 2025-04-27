@@ -5,6 +5,7 @@ import NavBar from "@/components/Navbar";
 import ConfessionForm from "@/components/Confessions/ConfessionForm";
 import ConfessionFeed from "@/components/Confessions/ConfessionFeed";
 import styles from "./page.module.css";
+import { getConfessions } from '@/lib/pocketbase'; // Import the new function
 
 export default function Confessions() {
   const [confessions, setConfessions] = useState([]);
@@ -14,71 +15,32 @@ export default function Confessions() {
   // Function to refresh the confessions after posting a new one
   const refreshConfessions = () => {
     setIsLoading(true);
-    // Simulate API fetch delay
-    setTimeout(() => {
-      fetchConfessions();
-    }, 500);
+    fetchConfessions(activeTab);
   };
   
   // Function to fetch confessions
-  const fetchConfessions = () => {
-    // This would be replaced with actual API call in production
-    // Simulating data for now
-    const mockConfessions = [
-      {
-        id: 'conf-001',
-        title: 'LOVE',
-        content: 'I Think i might love her',
-        tags: ['Love', 'Relationships'],
-        created: new Date('2025-04-19T14:30:00'),
-        reactions: {
-          upvotes: 0,
-          comments: 0
-        }
-      },
-      {
-        id: 'conf-002',
-        title: 'Failing My Classes',
-        content: "I haven't attended any classes this semester and finals are two weeks away. I don't know how to tell my parents I might fail everything.",
-        tags: ['Study', 'Stress'],
-        created: new Date('2025-04-18T09:45:00'),
-        reactions: {
-          upvotes: 12,
-          comments: 3
-        }
-      },
-      {
-        id: 'conf-003',
-        title: 'Secret Crush',
-        content: "I've had a crush on my roommate's boyfriend for the entire semester. I feel horrible about it but I can't stop these feelings.",
-        tags: ['Love', 'Friendship'],
-        created: new Date('2025-04-17T16:20:00'),
-        reactions: {
-          upvotes: 24,
-          comments: 7
-        }
-      }
-    ];
-    
-    setConfessions(mockConfessions);
-    setIsLoading(false);
+  const fetchConfessions = async (sortType = 'recent') => {
+    try {
+      // Use the new function to fetch confessions based on sort type
+      const fetchedConfessions = await getConfessions(sortType);
+      setConfessions(fetchedConfessions);
+    } catch (error) {
+      console.error("Error fetching confessions:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   // Initial fetch on component mount
   useEffect(() => {
-    fetchConfessions();
+    fetchConfessions(activeTab);
   }, []);
   
   // Function to handle tab changes
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     setIsLoading(true);
-    
-    // Simulate API fetch with some delay
-    setTimeout(() => {
-      // In a real app, we'd fetch different data based on the active tab
-      fetchConfessions();
-    }, 300);
+    fetchConfessions(tab);
   };
   
   return (

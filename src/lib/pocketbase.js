@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 
-// Initialize PocketBase
+
 const pb = new PocketBase('http://127.0.0.1:8090'); // Change this to your production URL later
 
 // Mock data storage when PocketBase is unavailable
@@ -370,5 +370,156 @@ function generateAnonymousName() {
   
   return `${randomAdjective}${randomAnimal}`;
 }
+// Add this to src/lib/pocketbase.js
+
+// Confessions feature functions
+export async function createConfession(confessionData) {
+  try {
+    const data = {
+      title: confessionData.title,
+      content: confessionData.message || confessionData.content,
+      tags: confessionData.tags || [],
+      created: new Date(),
+      reactions: {
+        upvotes: 0,
+        comments: 0
+      }
+    };
+    
+    let record;
+    
+    try {
+      // Try to create in PocketBase
+      record = await pb.collection('confessions').create(data);
+    } catch (pocketbaseError) {
+      console.warn('PocketBase connection failed, using mock data instead:', pocketbaseError);
+      
+      // Create mock data instead
+      const mockConfession = {
+        ...data,
+        id: 'mock-confession-' + Date.now(),
+      };
+      
+      // Add to mock confessions (create this at the top of the file)
+      mockConfessions.push(mockConfession);
+      
+      record = mockConfession;
+    }
+    
+    return record;
+  } catch (error) {
+    console.error('Error creating confession:', error);
+    throw error;
+  }
+}
+
+// Get confessions with sorting options
+export async function getConfessions(sort = 'recent') {
+  try {
+    let confessions = [];
+    
+    try {
+      // Sort options
+      let sortParam = '-created'; // Default to newest first
+      if (sort === 'trending') {
+        sortParam = '-reactions.upvotes,-created'; // Sort by upvotes, then by date
+      }
+      
+      // Fetch from PocketBase
+      const records = await pb.collection('confessions').getList(1, 50, {
+        sort: sortParam
+      });
+      
+      confessions = records.items;
+    } catch (pocketbaseError) {
+      console.warn('PocketBase connection failed, using mock data instead:', pocketbaseError);
+      
+      // Get mock confessions
+      confessions = mockConfessions;
+      
+      // Sort based on option
+      if (sort === 'trending') {
+        confessions.sort((a, b) => {
+          const votesA = (a.reactions?.upvotes || 0);
+          const votesB = (b.reactions?.upvotes || 0);
+          if (votesA !== votesB) return votesB - votesA;
+          return new Date(b.created) - new Date(a.created);
+        });
+      } else {
+        confessions.sort((a, b) => new Date(b.created) - new Date(a.created));
+      }
+    }
+    
+    return confessions;
+  } catch (error) {
+    console.error('Error fetching confessions:', error);
+    throw error;
+  }
+}
+
+// Update confession reactions (upvotes)
+export async function updateConfessionReaction(confessionId, reactions) {
+  try {
+    let record;
+    
+    try {
+      // Update in PocketBase
+      record = await pb.collection('confessions').update(confessionId, {
+        reactions: reactions
+      });
+    } catch (pocketbaseError) {
+      console.warn('PocketBase connection failed, using mock data instead:', pocketbaseError);
+      
+      // Update in mock data
+      const confessionIndex = mockConfessions.findIndex(c => c.id === confessionId);
+      if (confessionIndex >= 0) {
+        mockConfessions[confessionIndex].reactions = reactions;
+        record = mockConfessions[confessionIndex];
+      }
+    }
+    
+    return record;
+  } catch (error) {
+    console.error('Error updating confession reaction:', error);
+    throw error;
+  }
+}
+
+// Add this at the top of the file with the other mock data declarations
+let mockConfessions = [
+  {
+    id: 'conf-001',
+    title: 'LOVE',
+    content: 'I Think i might love her',
+    tags: ['Love', 'Relationships'],
+    created: new Date('2025-04-19T14:30:00'),
+    reactions: {
+      upvotes: 0,
+      comments: 0
+    }
+  },
+  {
+    id: 'conf-002',
+    title: 'Failing My Classes',
+    content: "I haven't attended any classes this semester and finals are two weeks away. I don't know how to tell my parents I might fail everything.",
+    tags: ['Study', 'Stress'],
+    created: new Date('2025-04-18T09:45:00'),
+    reactions: {
+      upvotes: 12,
+      comments: 3
+    }
+  },
+  {
+    id: 'conf-003',
+    title: 'Secret Crush',
+    content: "I've had a crush on my roommate's boyfriend for the entire semester. I feel horrible about it but I can't stop these feelings.",
+    tags: ['Love', 'Friendship'],
+    created: new Date('2025-04-17T16:20:00'),
+    reactions: {
+      upvotes: 24,
+      comments: 7
+    }
+  }
+];
 
 export default pb;
