@@ -5,10 +5,13 @@ export default function NavBar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
-        <Link href="/" className={styles.logo}>
-          <div className={styles.logoCircle}></div>
-          <div className={styles.logoText}>NST Connect</div>
-        </Link>
+      <Link href="/" className={styles.logo}>
+      <div className={styles.logoContainer}>
+    <span className={styles.logoCircle}></span>
+    <span className={styles.logoText}>NST</span>
+    <span className={styles.connectText}>Connect</span>
+     </div>
+    </Link>
         <div className={styles.navLinks}>
           <Link href="/confessions" className={styles.navLink}>
             CONFESSIONS

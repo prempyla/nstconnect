@@ -1,6 +1,6 @@
-// Add this to a dedicated file like lib/seedData.js or within an appropriate initialization file
+// src/lib/seedData.js
 
-import { pb } from './pocketbase'; // Import your pocketbase client
+import pb from './pocketbase'; // Import your pocketbase client
 
 const DEFAULT_ROOMS = [
   {
@@ -59,7 +59,10 @@ export async function seedDefaultRooms() {
         ...room,
         roomCode: randomCode,
         memberCount: Math.floor(Math.random() * 10) + 5, // Random number between 5-15
-        created: new Date().toISOString()
+        isTemporary: true,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week from now
+        created: new Date().toISOString(),
+        lastActivity: new Date().toISOString()
       });
     }
     

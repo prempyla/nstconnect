@@ -18,19 +18,41 @@
     align-items: center;
   }
   
+  .logoContainer {
+    position: relative; 
+    display: flex;
+    align-items: center;
+  }
+  
   .logoCircle {
-    height: 2rem;
-    width: 2rem;
+    position: absolute;
+    top: 59%;
+    left: 15px;
+    transform: translate(-30%, -50%);
+    height: 2.9rem;
+    width: 2.9rem;
     background-color: var(--yellow-light);
     border-radius: 50%;
-    margin-right: 0.5rem;
+    z-index: 0; /* Behind NST text */
   }
   
   .logoText {
+    position: relative; /* To appear above the circle */
     color: var(--navy-color);
     font-weight: bold;
     font-size: 1.25rem;
+    z-index: 1; /* Above yellow circle */
+    padding: 0 0.15rem;
   }
+  
+  .connectText {
+    margin-left: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: var(--navy-color);
+  }
+  
+  
   
   .navLinks {
     display: none;

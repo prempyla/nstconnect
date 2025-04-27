@@ -2,7 +2,9 @@ import Link from "next/link";
 import styles from './FeatureCard.module.css';
 
 export default function FeatureCard({ title, actionText, customClass, isActive = false }) {
-  const href = `/${title.toLowerCase()}`;
+  const href = `/${title.toLowerCase().replace(/\s+/g, '-')}`;
+  ;
+;
   
   return (
     <Link 
