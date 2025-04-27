@@ -90,53 +90,46 @@ export async function initConfessionsCollection() {
     
     // Check if the confessions collection exists
     try {
-      await pb.collection('confessions').getList(1, 1);
-      console.log("Confessions collection already exists.");
-    } catch (error) {
-      // Collection doesn't exist or couldn't be accessed, let's seed some data
-      console.log("Seeding initial confessions data...");
+      const list = await pb.collection('confessions').getList(1, 1);
+      console.log("Confessions collection exists with", list.totalItems, "items");
       
-      // In a real scenario, you'd create the collection in the PocketBase Admin UI
-      // or via the PocketBase API if you have admin privileges
-      
-      // For now, we'll ensure our mock data is populated
-      if (typeof mockConfessions !== 'undefined' && mockConfessions.length === 0) {
-        mockConfessions = [
+      // If the collection exists but is empty, we could seed some data
+      if (list.totalItems === 0) {
+        console.log("Seeding initial confessions data...");
+        
+        // Sample confessions for testing
+        const sampleConfessions = [
           {
-            id: 'conf-001',
             title: 'LOVE',
             content: 'I Think i might love her',
             tags: ['Love', 'Relationships'],
-            created: new Date('2025-04-19T14:30:00'),
+            created: new Date().toISOString(),
             reactions: {
               upvotes: 0,
               comments: 0
             }
           },
           {
-            id: 'conf-002',
             title: 'Failing My Classes',
             content: "I haven't attended any classes this semester and finals are two weeks away. I don't know how to tell my parents I might fail everything.",
             tags: ['Study', 'Stress'],
-            created: new Date('2025-04-18T09:45:00'),
+            created: new Date().toISOString(),
             reactions: {
               upvotes: 12,
               comments: 3
             }
-          },
-          {
-            id: 'conf-003',
-            title: 'Secret Crush',
-            content: "I've had a crush on my roommate's boyfriend for the entire semester. I feel horrible about it but I can't stop these feelings.",
-            tags: ['Love', 'Friendship'],
-            created: new Date('2025-04-17T16:20:00'),
-            reactions: {
-              upvotes: 24,
-              comments: 7
-            }
           }
         ];
+        
+        // Add the sample confessions to PocketBase
+        for (const confession of sampleConfessions) {
+          await pb.collection('confessions').create(confession);
+        }
+        
+        console.log("Added sample confessions to the database");
       }
+    } catch (error) {
+      console.warn("Error accessing confessions collection:", error);
     }
     
     console.log("Confessions collection setup complete.");

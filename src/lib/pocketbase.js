@@ -6,6 +6,7 @@ const pb = new PocketBase('http://127.0.0.1:8090'); // Change this to your produ
 // Mock data storage when PocketBase is unavailable
 let mockRooms = [];
 let mockMembers = [];
+let mockConfessions = [];
 
 // Helper functions for Safe Rooms feature
 export async function createSafeRoom(roomData) {
@@ -414,6 +415,7 @@ export async function createConfession(confessionData) {
 }
 
 // Get confessions with sorting options
+
 export async function getConfessions(sort = 'recent') {
   try {
     let confessions = [];
@@ -431,13 +433,13 @@ export async function getConfessions(sort = 'recent') {
       });
       
       confessions = records.items;
+      console.log("Successfully fetched confessions from PocketBase:", confessions.length);
     } catch (pocketbaseError) {
       console.warn('PocketBase connection failed, using mock data instead:', pocketbaseError);
       
       // Get mock confessions
       confessions = mockConfessions;
-      
-      // Sort based on option
+      console.log("Using mock confessions:", confessions.length);
       if (sort === 'trending') {
         confessions.sort((a, b) => {
           const votesA = (a.reactions?.upvotes || 0);
@@ -453,7 +455,7 @@ export async function getConfessions(sort = 'recent') {
     return confessions;
   } catch (error) {
     console.error('Error fetching confessions:', error);
-    throw error;
+    return []; // Return empty array instead of throwing
   }
 }
 
@@ -486,40 +488,19 @@ export async function updateConfessionReaction(confessionId, reactions) {
 }
 
 // Add this at the top of the file with the other mock data declarations
-let mockConfessions = [
-  {
-    id: 'conf-001',
-    title: 'LOVE',
-    content: 'I Think i might love her',
-    tags: ['Love', 'Relationships'],
-    created: new Date('2025-04-19T14:30:00'),
-    reactions: {
-      upvotes: 0,
-      comments: 0
-    }
-  },
-  {
-    id: 'conf-002',
-    title: 'Failing My Classes',
-    content: "I haven't attended any classes this semester and finals are two weeks away. I don't know how to tell my parents I might fail everything.",
-    tags: ['Study', 'Stress'],
-    created: new Date('2025-04-18T09:45:00'),
-    reactions: {
-      upvotes: 12,
-      comments: 3
-    }
-  },
-  {
-    id: 'conf-003',
-    title: 'Secret Crush',
-    content: "I've had a crush on my roommate's boyfriend for the entire semester. I feel horrible about it but I can't stop these feelings.",
-    tags: ['Love', 'Friendship'],
-    created: new Date('2025-04-17T16:20:00'),
-    reactions: {
-      upvotes: 24,
-      comments: 7
-    }
+
+// In src/lib/pocketbase.js
+// Add this function to authenticate as admin when needed
+
+export async function authenticateAsAdmin(email, password) {
+  try {
+    const authData = await pb.admins.authWithPassword(email, password);
+    console.log("Admin authenticated successfully");
+    return true;
+  } catch (error) {
+    console.error("Admin authentication failed:", error);
+    return false;
   }
-];
+}
 
 export default pb;

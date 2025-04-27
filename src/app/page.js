@@ -11,15 +11,15 @@ export default function Home() {
       <div className={styles.heroSection}>
         <div className={styles.container}>
           <h1 className={styles.title}>
-            <span className={styles.titleLine}>CONNECT</span>
+            <span className={styles.titleLine}>EXPRESS</span>
             <span className={styles.titleLine}>
-              AUGMENT
+              DARE
               <span className={styles.circle + " " + styles.pinkCircle}></span>
-              YOUR
+              CARE
             </span>
             <span className={styles.titleLine}>
               <span className={styles.circle + " " + styles.yellowCircle}></span>
-              REALITY
+              GROW
               <span className={styles.circle + " " + styles.purpleCircle}></span>
             </span>
           </h1>

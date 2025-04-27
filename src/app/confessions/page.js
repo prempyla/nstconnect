@@ -19,17 +19,22 @@ export default function Confessions() {
   };
   
   // Function to fetch confessions
-  const fetchConfessions = async (sortType = 'recent') => {
-    try {
-      // Use the new function to fetch confessions based on sort type
-      const fetchedConfessions = await getConfessions(sortType);
-      setConfessions(fetchedConfessions);
-    } catch (error) {
-      console.error("Error fetching confessions:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // In src/app/confessions/page.js
+// Add this to the fetchConfessions function
+
+const fetchConfessions = async (sortType = 'recent') => {
+  try {
+    console.log("Fetching confessions with sort type:", sortType);
+    // Use the new function to fetch confessions based on sort type
+    const fetchedConfessions = await getConfessions(sortType);
+    console.log("Fetched confessions:", fetchedConfessions.length);
+    setConfessions(fetchedConfessions);
+  } catch (error) {
+    console.error("Error fetching confessions:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
   
   // Initial fetch on component mount
   useEffect(() => {
