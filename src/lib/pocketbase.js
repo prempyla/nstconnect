@@ -286,66 +286,64 @@ export async function getMySafeRooms() {
       }).filter(Boolean);
       
       // If no rooms exist yet, create sample rooms
-      if (rooms.length === 0) {
-        // Add two sample rooms
-        const sampleRoom1 = {
-          id: 'sample-room-1',
-          name: 'Exam Stress Support',
-          category: 'Study',
-          description: 'A place to discuss exam stress',
-          creatorId: 'mock-user-id',
-          roomCode: generateRandomCode(8),
-          isTemporary: true,
-          isPublic: false,
-          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-          created: new Date(Date.now() - 2 * 60 * 60 * 1000),
-          memberCount: 5,
-          lastActivity: new Date()
-        };
-        
-        const sampleRoom2 = {
-          id: 'sample-room-2',
-          name: 'Freshman Homesickness',
-          category: 'Homesick',
-          description: 'Support for homesick freshmen',
-          creatorId: 'mock-user-id',
-          roomCode: generateRandomCode(8),
-          isTemporary: true,
-          isPublic: false,
-          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-          created: new Date(Date.now() - 24 * 60 * 60 * 1000),
-          memberCount: 3,
-          lastActivity: new Date(Date.now() - 24 * 60 * 60 * 1000)
-        };
-        
-        mockRooms.push(sampleRoom1, sampleRoom2);
-        
-        mockMembers.push(
-          {
-            id: 'mock-member-1',
-            roomId: sampleRoom1.id,
-            userId: 'mock-user-id',
-            anonymousName: generateAnonymousName()
-          },
-          {
-            id: 'mock-member-2',
-            roomId: sampleRoom2.id,
-            userId: 'mock-user-id',
-            anonymousName: generateAnonymousName()
-          }
-        );
-        
-        rooms = [sampleRoom1, sampleRoom2];
-      }
-    }
-    
-    return rooms;
-  } catch (error) {
-    console.error('Error fetching safe rooms:', error);
-    throw error;
-  }
-}
+      // Inside the if (rooms.length === 0) block
+const sampleRoom1 = {
+  id: 'sample-room-1',
+  name: 'Exam Stress Support',
+  category: 'Study',
+  description: 'A place to discuss exam stress',
+  creatorId: 'mock-user-id',
+  roomCode: generateRandomCode(8),
+  isTemporary: true,
+  isPublic: false,
+  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  created: new Date(),
+  memberCount: 1,
+  lastActivity: new Date()
+};
 
+const sampleRoom2 = {
+  id: 'sample-room-2',
+  name: 'Late Night Chat',
+  category: 'Chill',
+  description: 'Casual chats during late hours',
+  creatorId: 'mock-user-id',
+  roomCode: generateRandomCode(8),
+  isTemporary: true,
+  isPublic: false,
+  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  created: new Date(),
+  memberCount: 1,
+  lastActivity: new Date()
+};
+
+// Add them to mockRooms and mockMembers
+mockRooms.push(sampleRoom1, sampleRoom2);
+mockMembers.push(
+  {
+    id: 'mock-member-' + Date.now(),
+    roomId: sampleRoom1.id,
+    userId: 'mock-user-id',
+    anonymousName: generateAnonymousName()
+  },
+  {
+    id: 'mock-member-' + (Date.now() + 1),
+    roomId: sampleRoom2.id,
+    userId: 'mock-user-id',
+    anonymousName: generateAnonymousName()
+  }
+);
+
+// Return these sample rooms
+rooms = [sampleRoom1, sampleRoom2];
+
+}
+return rooms;
+} catch (error) {
+console.error('Error fetching my safe rooms:', error);
+throw error;
+}
+}
 // Function to clear mock data cache (useful for testing)
 export function clearMockData() {
   mockRooms = [];

@@ -38,39 +38,37 @@ const DEFAULT_ROOMS = [
 export async function seedDefaultRooms() {
   try {
     console.log("Checking for default rooms...");
-    
-    // Check if we already have public rooms
+
     const existingRooms = await pb.collection('safe_rooms').getList(1, 1, {
-      filter: 'isPublic = true'
+      filter: 'isPublic=true' // <-- fixed
     });
-    
-    // If there are already public rooms, don't seed
+
     if (existingRooms.totalItems > 0) {
       console.log("Default rooms already exist, skipping seeding.");
       return;
     }
-    
+
     console.log("No default rooms found, seeding...");
-    
-    // Create the default rooms
+
     for (const room of DEFAULT_ROOMS) {
       const randomCode = generateRoomCode();
       await pb.collection('safe_rooms').create({
         ...room,
         roomCode: randomCode,
-        memberCount: Math.floor(Math.random() * 10) + 5, // Random number between 5-15
+        memberCount: Math.floor(Math.random() * 10) + 5,
         isTemporary: true,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week from now
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         created: new Date().toISOString(),
         lastActivity: new Date().toISOString()
       });
     }
-    
+
     console.log("Default rooms seeded successfully!");
   } catch (error) {
-    console.error("Error seeding default rooms:", error);
+    console.error("Error seeding default rooms:", error.message, error.data);
   }
 }
+
 
 // Helper function to generate a random room code
 function generateRoomCode() {
