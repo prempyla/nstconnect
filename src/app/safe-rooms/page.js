@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import NavBar from "@/components/Navbar";
 import styles from "./page.module.css";
 import SafeRoomTabs from "@/components/SafeRooms/SafeRoomTabs";
-import SafeRoomWelcome from "@/components/SafeRooms/SafeRoomsWelcome";
+import SafeRoomWelcome from "@/components/SafeRooms/SafeRoomsWelcomeNote";
 import CreateRoomForm from "@/components/SafeRooms/CreateRoomForm";
 import JoinRoomForm from "@/components/SafeRooms/JoinRoomForm";
 import MyRooms from "@/components/SafeRooms/MyRooms";
