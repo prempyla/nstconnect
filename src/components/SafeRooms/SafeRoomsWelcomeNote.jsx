@@ -24,7 +24,7 @@ export default function SafeRoomWelcome() {
       <div className={styles.welcomeContent}>
         <h2 className={styles.welcomeTitle}>Welcome to Safe Rooms!</h2>
         <p className={styles.welcomeText}>
-          Safe Rooms provide a secure space for open conversations. Here you can:
+          Safe Rooms are anonymous, topic-based spaces designed to help people open up, be vulnerable, and support each other — without fear of judgment. Here you can:
         </p>
         <ul className={styles.featureList}>
           <li><strong>Create a Room</strong>: Set up a room as <strong>Public</strong> (visible to everyone) or <strong>Private</strong> (join only with a code).</li>
