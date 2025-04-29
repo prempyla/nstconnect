@@ -1,0 +1,60 @@
+/* src/components/SafeRooms/SafeRoomWelcome.module.css */
+.welcomeContainer {
+    background-color: var(--yellow-light);
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .welcomeContent {
+    padding: 1.5rem;
+  }
+  
+  .welcomeTitle {
+    color: var(--navy-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  
+  .welcomeText {
+    color: #444;
+    margin-bottom: 1rem;
+  }
+  
+  .featureList {
+    margin-bottom: 1.5rem;
+    margin-left: 1.5rem;
+  }
+  
+  .featureList li {
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+  
+  .dismissButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .dismissButton:hover {
+    background-color: var(--navy-dark);
+  }

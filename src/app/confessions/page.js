@@ -6,12 +6,19 @@ import ConfessionForm from "@/components/Confessions/ConfessionForm";
 import ConfessionFeed from "@/components/Confessions/ConfessionFeed";
 import styles from "./page.module.css";
 import { getConfessions } from '@/lib/pocketbase'; // Import the new function
+import ConfessionWelcome from '@/components/Confessions/ConfessionsWelcome';
 
 export default function Confessions() {
   const [confessions, setConfessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('recent'); // 'recent' or 'trending'
-  
+  const [showWelcome, setShowWelcome] = useState(true);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const wasShown = localStorage.getItem('ConfessionsWelcomeShown');
+      setShowWelcome(wasShown !== 'true');  
+    }
+  }, []);
   // Function to refresh the confessions after posting a new one
   const refreshConfessions = () => {
     setIsLoading(true);
@@ -54,6 +61,7 @@ const fetchConfessions = async (sortType = 'recent') => {
       
       <div className={styles.container}>
         <h1 className={styles.title}>Confessions Forum</h1>
+        {showWelcome && <ConfessionWelcome />}
         
         <ConfessionForm onConfessionSubmitted={refreshConfessions} />
         
