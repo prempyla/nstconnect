@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import NavBar from "@/components/Navbar";
 import styles from "./page.module.css";
 import SafeRoomTabs from "@/components/SafeRooms/SafeRoomTabs";
+import SafeRoomWelcome from "@/components/SafeRooms/SafeRoomsWelcome";
 import CreateRoomForm from "@/components/SafeRooms/CreateRoomForm";
 import JoinRoomForm from "@/components/SafeRooms/JoinRoomForm";
 import MyRooms from "@/components/SafeRooms/MyRooms";
@@ -14,6 +15,15 @@ export default function SafeRooms() {
   const [refreshRooms, setRefreshRooms] = useState(0);
   const [createdRoom, setCreatedRoom] = useState(null);
   const [joinedRoom, setJoinedRoom] = useState(null);
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  // Check if welcome message has been dismissed before
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const wasShown = localStorage.getItem('safeRoomWelcomeShown');
+      setShowWelcome(wasShown !== 'true');
+    }
+  }, []);
 
   // Function to switch to My Rooms tab and refresh the rooms
   const switchToMyRooms = () => {
@@ -93,6 +103,8 @@ export default function SafeRooms() {
       
       <div className={styles.container}>
         <h1 className={styles.title}>SAFE ROOMS</h1>
+        
+        {showWelcome && <SafeRoomWelcome />}
         
         <SafeRoomTabs activeTab={activeTab} onChangeTab={(tab) => {
           // Reset states when changing tabs
