@@ -1,6 +1,6 @@
 // src/lib/seedData.js
 
-import pb from './pocketbase'; // Import your pocketbase client
+import pb from './pocketbase'; // Assumes valid PocketBase client instance
 
 const DEFAULT_ROOMS = [
   {
@@ -40,7 +40,7 @@ export async function seedDefaultRooms() {
     console.log("Checking for default rooms...");
 
     const existingRooms = await pb.collection('safe_rooms').getList(1, 1, {
-      filter: 'isPublic=true' // <-- fixed
+      filter: 'isPublic=true'
     });
 
     if (existingRooms.totalItems > 0) {
@@ -51,14 +51,12 @@ export async function seedDefaultRooms() {
     console.log("No default rooms found, seeding...");
 
     for (const room of DEFAULT_ROOMS) {
-      const randomCode = generateRoomCode();
       await pb.collection('safe_rooms').create({
         ...room,
-        roomCode: randomCode,
+        roomCode: generateRoomCode(),
         memberCount: Math.floor(Math.random() * 10) + 5,
         isTemporary: true,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        created: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
         lastActivity: new Date().toISOString()
       });
     }
@@ -69,8 +67,6 @@ export async function seedDefaultRooms() {
   }
 }
 
-
-// Helper function to generate a random room code
 function generateRoomCode() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let result = '';
@@ -79,65 +75,57 @@ function generateRoomCode() {
   }
   return result;
 }
-// Add this to src/lib/seedData.js
 
-// Initialize the confessions collection
 export async function initConfessionsCollection() {
   try {
     console.log("Checking for confessions collection...");
-    
-    // Check if the confessions collection exists
-    try {
-      const list = await pb.collection('confessions').getList(1, 1);
-      console.log("Confessions collection exists with", list.totalItems, "items");
-      
-      // If the collection exists but is empty, we could seed some data
-      if (list.totalItems === 0) {
-        console.log("Seeding initial confessions data...");
-        
-        // Sample confessions for testing
-        const sampleConfessions = [
-          {
-            title: 'LOVE',
-            content: 'I Think i might love her',
-            tags: ['Love', 'Relationships'],
-            created: new Date().toISOString(),
-            reactions: {
-              upvotes: 0,
-              comments: 0
-            }
-          },
-          {
-            title: 'Failing My Classes',
-            content: "I haven't attended any classes this semester and finals are two weeks away. I don't know how to tell my parents I might fail everything.",
-            tags: ['Study', 'Stress'],
-            created: new Date().toISOString(),
-            reactions: {
-              upvotes: 12,
-              comments: 3
-            }
+
+    const list = await pb.collection('confessions').getList(1, 1);
+
+    if (list.totalItems === 0) {
+      console.log("Seeding initial confessions data...");
+
+      const sampleConfessions = [
+        {
+          title: 'LOVE',
+          content: 'I think I might love her.',
+          tags: ['Love', 'Relationships'],
+          reactions: {
+            upvotes: 0,
+            comments: 0
           }
-        ];
-        
-        // Add the sample confessions to PocketBase
-        for (const confession of sampleConfessions) {
-          await pb.collection('confessions').create(confession);
+        },
+        {
+          title: 'Failing My Classes',
+          content: "I haven't attended any classes this semester and finals are two weeks away. I don't know how to tell my parents I might fail everything.",
+          tags: ['Study', 'Stress'],
+          reactions: {
+            upvotes: 12,
+            comments: 3
+          }
         }
-        
-        console.log("Added sample confessions to the database");
+      ];
+
+      for (const confession of sampleConfessions) {
+        await pb.collection('confessions').create(confession);
       }
-    } catch (error) {
-      console.warn("Error accessing confessions collection:", error);
+
+      console.log("Added sample confessions to the database");
+    } else {
+      console.log("Confessions already exist, skipping seeding.");
     }
-    
+
     console.log("Confessions collection setup complete.");
   } catch (error) {
-    console.error("Error setting up confessions collection:", error);
+    console.error("Error setting up confessions collection:", error.message || error);
   }
 }
 
-// Call this function when initializing your app
 export async function initializeCollections() {
-  await seedDefaultRooms();
-  await initConfessionsCollection();
+  try {
+    await seedDefaultRooms();
+    await initConfessionsCollection();
+  } catch (error) {
+    console.error("Initialization failed:", error.message || error);
+  }
 }
