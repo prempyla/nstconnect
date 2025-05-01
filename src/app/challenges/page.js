@@ -1,11 +1,11 @@
-// src/app/challenges/page.js
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NavBar from "@/components/Navbar";
 import ChallengeDetail from "@/components/Challenges/ChallengeDetail";
 import CreateChallengeForm from "@/components/Challenges/CreateChallengeForm";
 import AvailableChallenges from "@/components/Challenges/AvailableChallenges";
+import ChallengesWelcome from '@/components/Challenges/ChallengesWelcome';
 // import Leaderboard from "@/components/Challenges/Leaderboard";
 import styles from "./page.module.css";
 
@@ -19,25 +19,33 @@ export default function Challenges() {
       description: 'Should solve coding question daily',
       currentDay: 2,
       totalDays: 30,
-      progress: 7, // percentage
+      progress: 7,
       lastCompleted: new Date()
     }
   ]);
   
   const [selectedChallenge, setSelectedChallenge] = useState(challenges[0]);
-  
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const wasShown = localStorage.getItem('ChallengesWelcomeShown');
+      setShowWelcome(wasShown !== 'true');
+    }
+  }, []);
+
   const tabs = [
     'My Challenges',
     'Available Challenges',
     'Leaderboard',
     'Create Challenge'
   ];
-  
+
   const handleChallengeCreated = (newChallenge) => {
     const challengeWithDefaults = {
       ...newChallenge,
       currentDay: 1,
-      progress: 3, // 1/30 days ≈ 3%
+      progress: 3,
       lastCompleted: null
     };
     
@@ -45,14 +53,17 @@ export default function Challenges() {
     setActiveTab('My Challenges');
     setSelectedChallenge(challengeWithDefaults);
   };
-  
+
   return (
     <main className={styles.main}>
       <NavBar />
-      
+
+      {/* Welcome Note - Show only if needed */}
+      {showWelcome && <ChallengesWelcome />}
+
       <div className={styles.container}>
         <h1 className={styles.title}>Challenge Streaks</h1>
-        
+
         <div className={styles.tabs}>
           {tabs.map(tab => (
             <button
@@ -64,14 +75,13 @@ export default function Challenges() {
             </button>
           ))}
         </div>
-        
+
         <div className={styles.content}>
           {activeTab === 'My Challenges' && (
             challenges.length > 0 ? (
               <ChallengeDetail 
                 challenge={selectedChallenge} 
                 onCheckIn={(challengeId, checkInData) => {
-                  // Handle check-in logic
                   setChallenges(challenges.map(c => 
                     c.id === challengeId 
                       ? { 

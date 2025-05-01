@@ -1,5 +1,3 @@
-// src/lib/seedData.js
-
 import pb from './pocketbase'; // Assumes valid PocketBase client instance
 
 const DEFAULT_ROOMS = [
@@ -63,7 +61,7 @@ export async function seedDefaultRooms() {
 
     console.log("Default rooms seeded successfully!");
   } catch (error) {
-    console.error("Error seeding default rooms:", error.message, error.data);
+    console.error("Error seeding default rooms:", error.message || error, error.data || "No additional error data");
   }
 }
 
