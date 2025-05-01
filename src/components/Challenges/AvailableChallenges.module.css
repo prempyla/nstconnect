@@ -1,0 +1,117 @@
+/* src/components/Challenges/AvailableChallenges.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .headerSection {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+    color: var(--navy-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sectionDescription {
+    color: #666;
+    font-size: 1rem;
+  }
+  
+  .challengeGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .challengeCard {
+    background-color: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .challengeCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cardHeader {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+  }
+  
+  .categoryBadge {
+    background-color: var(--navy-color);
+    color: white;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+  }
+  
+  .participantCount {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .cardContent {
+    padding: 1.5rem;
+    flex-grow: 1;
+  }
+  
+  .challengeTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.75rem;
+  }
+  
+  .challengeDescription {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  
+  .challengeDuration {
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .joinButton {
+    background-color: var(--navy-color);
+    color: white;
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 0.95rem;
+  }
+  
+  .joinButton:hover {
+    background-color: var(--navy-dark, #0f1655);
+  }
+  
+  @media (min-width: 640px) {
+    .challengeGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .challengeGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }

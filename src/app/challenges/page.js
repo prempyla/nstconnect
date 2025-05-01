@@ -3,11 +3,28 @@
 
 import { useState } from 'react';
 import NavBar from "@/components/Navbar";
-import ChallengeStreaks from "@/components/Challenges/ChallengeStreaks";
+import ChallengeDetail from "@/components/Challenges/ChallengeDetail";
+import CreateChallengeForm from "@/components/Challenges/CreateChallengeForm";
+import AvailableChallenges from "@/components/Challenges/AvailableChallenges";
+// import Leaderboard from "@/components/Challenges/Leaderboard";
 import styles from "./page.module.css";
 
 export default function Challenges() {
   const [activeTab, setActiveTab] = useState('My Challenges');
+  const [challenges, setChallenges] = useState([
+    {
+      id: 'c1',
+      title: 'Coding Challenge',
+      category: 'Productivity',
+      description: 'Should solve coding question daily',
+      currentDay: 2,
+      totalDays: 30,
+      progress: 7, // percentage
+      lastCompleted: new Date()
+    }
+  ]);
+  
+  const [selectedChallenge, setSelectedChallenge] = useState(challenges[0]);
   
   const tabs = [
     'My Challenges',
@@ -15,6 +32,19 @@ export default function Challenges() {
     'Leaderboard',
     'Create Challenge'
   ];
+  
+  const handleChallengeCreated = (newChallenge) => {
+    const challengeWithDefaults = {
+      ...newChallenge,
+      currentDay: 1,
+      progress: 3, // 1/30 days ≈ 3%
+      lastCompleted: null
+    };
+    
+    setChallenges([...challenges, challengeWithDefaults]);
+    setActiveTab('My Challenges');
+    setSelectedChallenge(challengeWithDefaults);
+  };
   
   return (
     <main className={styles.main}>
@@ -36,10 +66,39 @@ export default function Challenges() {
         </div>
         
         <div className={styles.content}>
-          {activeTab === 'My Challenges' && <ChallengeStreaks />}
-          {activeTab === 'Available Challenges' && <div>Available challenges will appear here</div>}
-          {activeTab === 'Leaderboard' && <div>Leaderboard will appear here</div>}
-          {activeTab === 'Create Challenge' && <div>Create challenge form will appear here</div>}
+          {activeTab === 'My Challenges' && (
+            challenges.length > 0 ? (
+              <ChallengeDetail 
+                challenge={selectedChallenge} 
+                onCheckIn={(challengeId, checkInData) => {
+                  // Handle check-in logic
+                  setChallenges(challenges.map(c => 
+                    c.id === challengeId 
+                      ? { 
+                          ...c, 
+                          currentDay: c.currentDay + 1, 
+                          progress: Math.round((c.currentDay + 1) / c.totalDays * 100),
+                          lastCompleted: new Date() 
+                        }
+                      : c
+                  ));
+                }}
+              />
+            ) : (
+              <div className={styles.emptyState}>
+                <p>You don't have any active challenges yet.</p>
+                <button 
+                  className={styles.startButton}
+                  onClick={() => setActiveTab('Create Challenge')}
+                >
+                  Create Your First Challenge
+                </button>
+              </div>
+            )
+          )}
+          {activeTab === 'Available Challenges' && <AvailableChallenges />}
+          {/* {activeTab === 'Leaderboard' && <Leaderboard />} */}
+          {activeTab === 'Create Challenge' && <CreateChallengeForm onChallengeCreated={handleChallengeCreated} />}
         </div>
       </div>
     </main>

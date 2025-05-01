@@ -1,167 +1,187 @@
 /* src/components/Challenges/ChallengeStreaks.module.css */
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-  }
-  
-  .statsContainer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-  
-  .statsCard {
-    background-color: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    text-align: center;
-  }
-  
-  .statsTitle {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-  }
-  
-  .statsValue {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--navy-color);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.statsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.statsCard {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.statsTitle {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.statsValue {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--navy-color);
+}
+
+.challengeList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.challengeCard {
+  background-color: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.challengeCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.challengeHeader {
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.challengeContent {
+  padding: 1.5rem;
+}
+
+.challengeTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--navy-color);
+  margin-bottom: 1rem;
+}
+
+.streakContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.streakValue {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: var(--navy-color);
+  line-height: 1;
+}
+
+.streakLabel {
+  font-size: 0.8rem;
+  color: var(--navy-color);
+  opacity: 0.8;
+}
+
+.progressContainer {
+  margin-bottom: 1.5rem;
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.progressBar {
+  height: 0.5rem;
+  background-color: #f0f0f0;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--navy-color);
+  border-radius: 9999px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actionButton {
+  background-color: var(--navy-color);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  border: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actionButton:hover {
+  background-color: var(--navy-dark);
+}
+
+.lastCompleted {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.emptyState {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.emptyState p {
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.emptyState p:first-child {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--navy-color);
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
   .challengeList {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .challengeCard {
-    background-color: white;
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+@media (min-width: 1024px) {
+  .challengeList {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  .challengeCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .challengeHeader {
-    padding: 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .category {
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.8rem;
-    font-weight: 500;
-  }
-  
-  .challengeContent {
-    padding: 1.5rem;
-  }
-  
-  .challengeTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--navy-color);
-    margin-bottom: 1rem;
-  }
-  
-  .streakContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .streakValue {
-    font-size: 1.75rem;
-    font-weight: bold;
-    color: var(--navy-color);
-    line-height: 1;
-  }
-  
-  .streakLabel {
-    font-size: 0.8rem;
-    color: var(--navy-color);
-    opacity: 0.8;
-  }
-  
-  .progressContainer {
-    margin-bottom: 1.5rem;
-  }
-  
-  .progressLabel {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-  }
-  
-  .progressBar {
-    height: 0.5rem;
-    background-color: #f0f0f0;
-    border-radius: 9999px;
-    overflow: hidden;
-  }
-  
-  .progressFill {
-    height: 100%;
-    background-color: var(--navy-color);
-    border-radius: 9999px;
-  }
-  
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .actionButton {
-    background-color: var(--navy-color);
-    color: white;
-    padding: 0.6rem 1.2rem;
-    border-radius: 9999px;
-    border: none;
-    font-weight: 500;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .actionButton:hover {
-    background-color: var(--navy-dark);
-  }
-  
-  .lastCompleted {
-    font-size: 0.8rem;
-    color: #666;
-  }
-  
-  .loading {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
-  }
-  
-  @media (min-width: 768px) {
-    .challengeList {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .challengeList {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+}

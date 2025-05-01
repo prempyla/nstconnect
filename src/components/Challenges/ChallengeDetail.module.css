@@ -1,0 +1,227 @@
+/* src/components/Challenges/ChallengeDetail.module.css */
+.challengeDetail {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .challengeHeader {
+    margin-bottom: 1.5rem;
+  }
+  
+  .challengeTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #121212;
+    margin-bottom: 0.5rem;
+  }
+  
+  .challengeMeta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  
+  .challengeDescription {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .progressSection {
+    margin-bottom: 1.75rem;
+  }
+  
+  .progressInfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .progressPercentage {
+    font-weight: 600;
+  }
+  
+  .progressBar {
+    height: 0.5rem;
+    background-color: #f0f0f0;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background-color: var(--navy-color);
+    border-radius: 9999px;
+  }
+  
+  .actionButtons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  
+  .checkInButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .checkInButton:hover {
+    background-color: var(--navy-dark, #0f1655);
+  }
+  
+  .viewProgressButton {
+    background-color: white;
+    color: var(--navy-color);
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .viewProgressButton:hover {
+    background-color: #f9f9f9;
+    border-color: #d0d0d0;
+  }
+  
+  .quitButton {
+    background-color: white;
+    color: #ff3b30;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-left: auto;
+  }
+  
+  .quitButton:hover {
+    background-color: #fff5f5;
+    border-color: #ffcdd2;
+  }
+  
+  .checkInSection {
+    margin-top: 2rem;
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+  }
+  
+  .checkInTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .checkInForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .checkInTextarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+  
+  .checkInTextarea:focus {
+    outline: none;
+    border-color: var(--navy-color);
+    box-shadow: 0 0 0 2px rgba(22, 29, 86, 0.1);
+  }
+  
+  .fileUploadSection {
+    margin-bottom: 1rem;
+  }
+  
+  .uploadLabel {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+  }
+  
+  .fileInputContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .fileInputLabel {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .fileInputLabel:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .fileInput {
+    display: none;
+  }
+  
+  .fileName {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .submitButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-end;
+  }
+  
+  .submitButton:hover {
+    background-color: var(--navy-dark, #0f1655);
+  }
+  
+  .noChallenge {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .actionButtons {
+      flex-direction: column;
+    }
+    
+    .quitButton {
+      margin-left: 0;
+    }
+    
+    .submitButton {
+      align-self: center;
+      width: 100%;
+    }
+  }

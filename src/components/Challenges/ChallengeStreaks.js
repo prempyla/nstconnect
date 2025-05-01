@@ -1,51 +1,23 @@
 // src/components/Challenges/ChallengeStreaks.js
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './ChallengeStreaks.module.css';
 
-export default function ChallengeStreaks() {
-  const [challenges, setChallenges] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    // Fetch or mock the challenges data
-    const mockChallengeData = [
-      {
-        id: 'c1',
-        title: 'Morning Meditation',
-        category: 'Wellness',
-        streak: 7,
-        totalDays: 30,
-        lastCompleted: new Date(),
-        color: 'var(--pink-light)'
-      },
-      {
-        id: 'c2',
-        title: 'Coding Practice',
-        category: 'Productivity',
-        streak: 15,
-        totalDays: 30,
-        lastCompleted: new Date(),
-        color: 'var(--purple-light)'
-      },
-      {
-        id: 'c3',
-        title: 'Daily Journal',
-        category: 'Personal Growth',
-        streak: 21,
-        totalDays: 30,
-        lastCompleted: new Date(Date.now() - 24 * 60 * 60 * 1000), // Yesterday
-        color: 'var(--yellow-light)'
-      }
-    ];
-    
-    setChallenges(mockChallengeData);
-    setLoading(false);
-  }, []);
+export default function ChallengeStreaks({ challenges = [] }) {
+  const [loading, setLoading] = useState(false);
   
   if (loading) {
     return <div className={styles.loading}>Loading your challenges...</div>;
+  }
+  
+  if (challenges.length === 0) {
+    return (
+      <div className={styles.emptyState}>
+        <p>You don't have any active challenges yet.</p>
+        <p>Go to the "Create Challenge" tab to start a new challenge!</p>
+      </div>
+    );
   }
   
   return (
@@ -111,6 +83,8 @@ export default function ChallengeStreaks() {
 
 // Helper function to format date
 function formatDate(date) {
+  if (!date) return 'Never';
+  
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
