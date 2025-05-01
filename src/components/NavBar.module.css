@@ -47,7 +47,7 @@
   .connectText {
     margin-left: 0.25rem;
     font-size: 1.25rem;
-    font-weight: normal;
+    font-weight: bold;
     color: var(--navy-color);
   }
   
