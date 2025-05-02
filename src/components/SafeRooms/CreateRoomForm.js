@@ -20,19 +20,17 @@ export default function CreateRoomForm({ onRoomCreated }) {
     setError(null);
     
     try {
-        const room = await createSafeRoom({ name, category, description, isPublic });
-        setRoomCode(room.roomCode);
-        
-        // Notify parent component if callback provided
-        if (onRoomCreated) {
-          onRoomCreated(room);
-        }
-      } catch (err) {
-        setError('Error creating room. Please try again.');
-        console.error(err);
-      } finally {
-        setIsSubmitting(false);
+      const room = await createSafeRoom({ name, category, description, isPublic });
+      setRoomCode(room.roomCode);
+      if (onRoomCreated) {
+        onRoomCreated(room);
       }
+    } catch (err) {
+      setError('Error creating room. Please try again.');
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (roomCode) {
@@ -49,9 +47,7 @@ export default function CreateRoomForm({ onRoomCreated }) {
   return (
     <div>
       <h2 className={styles.formTitle}>CREATE A SAFE ROOM</h2>
-      
       {error && <div className={styles.errorMessage}>{error}</div>}
-      
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
           <label htmlFor="room-name" className={styles.label}>Room Name</label>
@@ -65,12 +61,12 @@ export default function CreateRoomForm({ onRoomCreated }) {
             required
           />
         </div>
-        
+
         <div className={styles.formGroup}>
           <label htmlFor="category" className={styles.label}>Category</label>
           <select 
             id="category"
-            value={category} 
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
             className={styles.select}
             required
@@ -83,7 +79,7 @@ export default function CreateRoomForm({ onRoomCreated }) {
             <option value="Other">Other</option>
           </select>
         </div>
-        
+
         <div className={styles.formGroup}>
           <label htmlFor="description" className={styles.label}>Description (Optional)</label>
           <textarea
@@ -97,32 +93,40 @@ export default function CreateRoomForm({ onRoomCreated }) {
         </div>
 
         <div className={styles.formGroup}>
-          <div className={styles.visibilityToggle}>
-            <label className={styles.toggleLabel}>
-              <input 
-                type="checkbox" 
-                checked={isPublic}
-                onChange={(e) => setIsPublic(e.target.checked)}
-                className={styles.toggleInput}
+          <span className={styles.visibilityTitle}>Room Visibility:</span>
+          <div className={styles.radioGroup}>
+            <label className={styles.radioLabel}>
+              <input
+                type="radio"
+                name="visibility"
+                value="private"
+                checked={!isPublic}
+                onChange={() => setIsPublic(false)}
+                className={styles.radioInput}
               />
-              <span className={styles.toggleSlider}></span>
+              Private Room
             </label>
-            <div className={styles.toggleText}>
-              <span className={styles.visibilityTitle}>Room Visibility: </span>
-              <span className={styles.visibilityValue}>
-                {isPublic ? 'Public' : 'Private'} Room
-              </span>
-              <p className={styles.visibilityDescription}>
-                {isPublic 
-                  ? 'Anyone can discover and join this room from Available Rooms.' 
-                  : 'Only people with the room code can join this room.'}
-              </p>
-            </div>
+            <label className={styles.radioLabel}>
+              <input
+                type="radio"
+                name="visibility"
+                value="public"
+                checked={isPublic}
+                onChange={() => setIsPublic(true)}
+                className={styles.radioInput}
+              />
+              Public Room
+            </label>
           </div>
+          <p className={styles.visibilityDescription}>
+            {isPublic
+              ? 'Anyone can discover and join this room from Available Rooms.'
+              : 'Only people with the room code can join this room.'}
+          </p>
         </div>
-        
-        <button 
-          type="submit" 
+
+        <button
+          type="submit"
           className={styles.submitButton}
           disabled={isSubmitting}
         >

@@ -61,7 +61,7 @@ export async function seedDefaultRooms() {
 
     console.log("Default rooms seeded successfully!");
   } catch (error) {
-    console.error("Error seeding default rooms:", error.message || error, error.data || "No additional error data");
+    console.error("Error seeding default rooms:", error?.message || error, error?.data ?? "No additional error data");
   }
 }
 
@@ -115,7 +115,7 @@ export async function initConfessionsCollection() {
 
     console.log("Confessions collection setup complete.");
   } catch (error) {
-    console.error("Error setting up confessions collection:", error.message || error);
+    console.error("Error setting up confessions collection:", error?.message || error, error?.data ?? "No additional error data");
   }
 }
 
@@ -124,6 +124,6 @@ export async function initializeCollections() {
     await seedDefaultRooms();
     await initConfessionsCollection();
   } catch (error) {
-    console.error("Initialization failed:", error.message || error);
+    console.error("Initialization failed:", error?.message || error, error?.data ?? "No additional error data");
   }
 }
