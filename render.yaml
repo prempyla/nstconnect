@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: nstconnect-pocketbase
+    runtime: node
+    buildCommand: ""
+    startCommand: cd pocketbase_dir && ./start.sh
+    env: node
+    disk:
+      name: pb_data
+      mountPath: /opt/render/project/src/pocketbase_dir/pb_data
+
