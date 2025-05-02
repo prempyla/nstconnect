@@ -14,8 +14,8 @@ export default function ChallengeStreaks({ challenges = [] }) {
   if (challenges.length === 0) {
     return (
       <div className={styles.emptyState}>
-        <p>You don't have any active challenges yet.</p>
-        <p>Go to the "Create Challenge" tab to start a new challenge!</p>
+        <p>You Don&apos;t  have any active challenges yet.</p>
+        <p>Go to the &quot;Create Challenge&quot;tab to start a new challenge!</p>
       </div>
     );
   }

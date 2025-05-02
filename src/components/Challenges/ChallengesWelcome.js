@@ -34,7 +34,7 @@ export default function ChallengesWelcome() {
           Whether it’s writing a letter to your future self, admitting a fear, or encouraging a stranger — each challenge is a small step toward vulnerability, connection, and emotional growth.
         </p>
         <p className={styles.note}>
-          <strong>Note:</strong> This is a preview version — backend is not yet active, so challenge responses aren't stored yet.
+          <strong>Note:</strong> This is a preview version — backend is not yet active, so challenge responses arent stored yet.
         </p>
         <button 
           className={styles.dismissButton}

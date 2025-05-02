@@ -18,7 +18,7 @@ export default function Confessions() {
       const wasShown = localStorage.getItem('ConfessionsWelcomeShown');
       setShowWelcome(wasShown !== 'true');  
     }
-  }, []);
+  }, [activeTab]);
   // Function to refresh the confessions after posting a new one
   const refreshConfessions = () => {
     setIsLoading(true);

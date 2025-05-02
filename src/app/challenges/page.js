@@ -96,7 +96,7 @@ export default function Challenges() {
               />
             ) : (
               <div className={styles.emptyState}>
-                <p>You don't have any active challenges yet.</p>
+                <p>You Don&apos;t have any active challenges yet.</p>
                 <button 
                   className={styles.startButton}
                   onClick={() => setActiveTab('Create Challenge')}
