@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AnonymousUser {
+  id                String              @id @default(uuid())
+  createdAt         DateTime            @default(now())
+  lastActive        DateTime            @updatedAt
+  confessions       Confession[]
+  flags             Flag[]
+  ChallengeResponse ChallengeResponse[]
+  ownedRooms        Room[]              @relation("RoomCreator")
+  memberships       RoomMembership[]
+  messages          Message[]
+  roomBans          RoomBan[]
+}
+
+model Confession {
+  id        String        @id @default(uuid())
+  content   String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  userId    String
+  user      AnonymousUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([userId])
+}
+
+model Flag {
+  id          String         @id @default(uuid())
+  contentType String // 'confession' | 'message'
+  contentId   String
+  reason      String?
+  createdAt   DateTime       @default(now())
+  userId      String?
+  user        AnonymousUser? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+// ─── Safe Rooms ───────────────────────────────────────────────
+
+model Room {
+  id          String           @id @default(uuid())
+  name        String
+  description String?
+  isPublic    Boolean          @default(true)
+  joinCode    String?          @unique
+  createdBy   String
+  createdAt   DateTime         @default(now())
+  creator     AnonymousUser    @relation("RoomCreator", fields: [createdBy], references: [id], onDelete: Cascade)
+  members     RoomMembership[]
+  messages    Message[]
+  bans        RoomBan[]
+
+  @@index([createdBy])
+  @@index([isPublic])
+}
+
+model RoomMembership {
+  id        String        @id @default(uuid())
+  roomId    String
+  userId    String
+  joinedAt  DateTime      @default(now())
+  room      Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user      AnonymousUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, userId])
+  @@index([userId])
+}
+
+model Message {
+  id        String        @id @default(uuid())
+  roomId    String
+  userId    String
+  text      String
+  createdAt DateTime      @default(now())
+  room      Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user      AnonymousUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([roomId, createdAt])
+}
+
+model RoomBan {
+  id        String        @id @default(uuid())
+  roomId    String
+  userId    String
+  createdAt DateTime      @default(now())
+  room      Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user      AnonymousUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, userId])
+}
+
+// ─── Challenges ───────────────────────────────────────────────
+
+model Challenge {
+  id        String              @id @default(uuid())
+  title     String
+  prompt    String
+  startAt   DateTime?
+  endAt     DateTime?
+  isPublic  Boolean             @default(true)
+  creatorId String?
+  createdAt DateTime            @default(now())
+  responses ChallengeResponse[]
+
+  @@index([startAt])
+  @@index([creatorId])
+}
+
+model ChallengeResponse {
+  id          String        @id @default(uuid())
+  challengeId String
+  challenge   Challenge     @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  userId      String
+  user        AnonymousUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text        String
+  createdAt   DateTime      @default(now())
+
+  @@index([challengeId])
+  @@index([userId])
+}
