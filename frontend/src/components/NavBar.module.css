@@ -1,0 +1,92 @@
+.navbar {
+    width: 100%;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logoContainer {
+    position: relative; 
+    display: flex;
+    align-items: center;
+  }
+  
+  .logoCircle {
+    position: absolute;
+    top: 59%;
+    left: 13px;
+    transform: translate(-30%, -50%);
+    height: 2.9rem;
+    width: 2.7rem;
+    background-color: var(--yellow-light);
+    border-radius: 50%;
+    z-index: 0; /* Behind NST text */
+  }
+  
+  .logoText {
+    position: relative; /* To appear above the circle */
+    color: var(--navy-color);
+    font-weight: bold;
+    font-size: 1.25rem;
+    z-index: 1; /* Above yellow circle */
+    padding: 0 0.15rem;
+  }
+  
+  .connectText {
+    margin-left: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--navy-color);
+  }
+  
+  
+  
+  .navLinks {
+    display: none;
+  }
+  
+  .navLink {
+    color: #666;
+    margin: 0 1rem;
+    transition: color 0.3s;
+  }
+  
+  .navLink:hover {
+    color: var(--navy-color);
+  }
+  
+  .signupButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .signupButton:hover {
+    background-color: var(--navy-dark);
+  }
+  
+  @media (min-width: 768px) {
+    .navbar {
+      padding: 1rem 2rem;
+    }
+    
+    .navLinks {
+      display: flex;
+      space-x: 2rem;
+    }
+  }
