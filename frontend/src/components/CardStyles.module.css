@@ -1,0 +1,8 @@
+.lightCard {
+    background-color: var(--purple-light);
+  }
+  
+  .darkCard {
+    background-color: var(--navy-color);
+    color: white;
+  }

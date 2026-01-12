@@ -1,0 +1,59 @@
+.card {
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 15rem;
+  transition: all 0.3s;
+  color: var(--navy-color);
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.active {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.comingSoon {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.comingSoon:hover {
+  box-shadow: none;
+}
+
+.comingSoonBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--navy-color);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.actionText {
+  font-weight: 500;
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-top: auto;
+  margin-bottom: 1.5rem;
+}
+
+.arrow {
+  display: flex;
+  justify-content: flex-end;
+}
