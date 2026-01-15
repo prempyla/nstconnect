@@ -1,0 +1,118 @@
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .card {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cardHeader {
+    margin-bottom: 1rem;
+  }
+  
+  .cardTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--navy-color);
+  }
+  
+  .cardContent {
+    margin-bottom: 1.5rem;
+    white-space: pre-line;
+    line-height: 1.5;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tag {
+    background-color: var(--purple-light);
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .date {
+    color: #666;
+    font-size: 0.875rem;
+  }
+  
+  .reactions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .reactionButton, .commentCount {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #666;
+    font-size: 0.875rem;
+  }
+  
+  .reactionButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+  }
+  
+  .reactionButton:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .upvoted {
+    color: #2F8A2F;
+  }
+  
+  .commentCount {
+    color: #666;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
+  
+  .emptyState {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .emptyState h3 {
+    color: var(--navy-color);
+    margin-bottom: 0.5rem;
+  }
