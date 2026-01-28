@@ -1,0 +1,109 @@
+/* src/components/SafeRooms/JoinRoomForm.module.css */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .formTitle {
+    font-size: 1.5rem;
+    color: var(--navy-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .label {
+    font-weight: 500;
+    color: var(--navy-color);
+  }
+  
+  .input {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: white;
+    font-size: 1.25rem;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 0.25rem;
+    font-weight: 500;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: var(--navy-color);
+  }
+  
+  .helpText {
+    text-align: center;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .submitButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+  }
+  
+  .submitButton:hover:not(:disabled) {
+    background-color: var(--navy-dark);
+  }
+  
+  .submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .errorMessage {
+    background-color: #FFECEC;
+    color: #D32F2F;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .successContainer {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .successTitle {
+    font-size: 1.5rem;
+    color: var(--navy-color);
+    margin-bottom: 1rem;
+  }
+  
+  .successMessage {
+    margin-bottom: 1.5rem;
+    color: #555;
+  }
+  
+  .enterButton {
+    background-color: var(--navy-color);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .enterButton:hover {
+    background-color: var(--navy-dark);
+  }
