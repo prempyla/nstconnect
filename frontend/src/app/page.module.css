@@ -1,0 +1,89 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.heroSection {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--navy-color);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.titleLine {
+  display: block;
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  margin: 0 1rem;
+}
+
+.pinkCircle {
+  background-color: var(--pink-light);
+}
+
+.yellowCircle {
+  background-color: var(--yellow-light);
+}
+
+.purpleCircle {
+  background-color: var(--purple-light);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #FF69B4;
+  margin: 1.5rem 0 3rem;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 4rem;
+  }
+  
+  .heroSection {
+    padding: 6rem 2rem;
+  }
+  
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 5rem;
+  }
+}
