@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AnonymousUser {
+  id          String       @id @default(uuid())
+  createdAt   DateTime     @default(now())
+  lastActive  DateTime     @updatedAt
+  confessions Confession[]
+  //to report users
+  flags       Flag[]
+}
+
+model Confession {
+  id        String        @id @default(uuid())
+  content   String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  userId    String
+  user      AnonymousUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([userId])
+}
+
+model Flag {
+  id          String         @id @default(uuid())
+  contentType String // 'confession' | 'message' (future)
+  contentId   String
+  reason      String?
+  createdAt   DateTime       @default(now())
+  userId      String?
+  user        AnonymousUser? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
